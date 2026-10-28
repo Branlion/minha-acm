@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#111214">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>Meu Treino</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f2;--s:#fff;--s2:#eceee9;--t:#17181a;--m:#666a64;--a:#1f7a53;--ln:#d3d6cf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111214;--s:#1b1c20;--s2:#26272c;--t:#f0f1f2;--m:#9a9ca4;--a:#3fa377;--ln:#34353b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111214;--s:#1b1c20;--s2:#26272c;--t:#f0f1f2;--m:#9a9ca4;--a:#3fa377;--ln:#34353b;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--t);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:520px;margin:0 auto;padding:16px 14px 170px}
+h1,.big,.eh b{font-family:"Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:.2px}
+h1{font-size:30px;margin:4px 0 12px}
+.m{color:var(--m);margin:6px 0 10px;font-size:13px}
+button,input{font:inherit;color:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.bar b{display:block;font-size:13px;color:var(--m);font-weight:500}
+.big{font-size:38px;font-weight:700;line-height:1}
+.b{border:0;border-radius:12px;padding:11px 18px;font-weight:600}
+.b.g{background:var(--a);color:#fff}.b.s{background:var(--s2);border:1px solid var(--ln)}.b.w{width:100%;margin-top:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px}
+.c{flex:none;border:1px solid var(--ln);background:var(--s);border-radius:20px;padding:8px 15px}
+.c.on{background:var(--a);border-color:var(--a);color:#fff}
+.row{display:flex;gap:8px;margin-bottom:6px}
+.nm,.q{flex:1;min-width:0;height:42px;border-radius:10px;border:1px solid var(--ln);background:var(--s);padding:0 12px;font-weight:600}
+.q{width:100%;margin-bottom:10px;font-weight:400}
+.card{background:var(--s);border:1px solid var(--ln);border-radius:16px;padding:12px;margin:12px 0}
+.eh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.eh b{font-size:21px;font-weight:600}
+.x{border:0;background:none;color:var(--m);font-size:18px;padding:4px 8px}
+.g4{display:grid;grid-template-columns:30px 1fr 1.1fr 1fr 46px;gap:8px;align-items:center;margin-bottom:6px;padding:4px;border-radius:12px}
+.g4.hd{font-size:11px;color:var(--m);text-align:center}
+.g4.dn{background:color-mix(in srgb,var(--a) 30%,transparent)}.card.ok{border-color:var(--a);background:color-mix(in srgb,var(--a) 12%,var(--s))}
+.sn{width:26px;height:26px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-size:13px;font-weight:600}
+.pv{text-align:center;color:var(--m);font-size:13px}
+.g4 input{width:100%;height:42px;border-radius:10px;border:1px solid var(--ln);background:var(--s2);text-align:center;font-size:16px;min-width:0}
+.ck{height:42px;border-radius:10px;border:1px solid var(--ln);background:var(--s2);color:var(--m);font-size:18px}
+.dn .ck{background:var(--a);border-color:var(--a);color:#fff}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--ln)}
+.li span{display:block;color:var(--m);font-size:13px}
+.ad{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--a);color:#fff;font-size:22px}
+.hl{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:4px 0;border-top:1px solid var(--ln)}.hl span:last-child{color:var(--m);text-align:right}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--s);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;border:0;background:none;padding:14px 4px;color:var(--m);font-weight:600}nav button.on{color:var(--a)}
+#rb{position:fixed;left:10px;right:10px;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:6}
+.rest{max-width:500px;margin:0 auto;background:var(--a);color:#fff;border-radius:16px;padding:10px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.rest .big{flex:1;font-size:34px}.rest button{border:1px solid rgba(255,255,255,.5);background:none;border-radius:10px;padding:8px 10px;color:#fff;font-weight:600}
+</style></head><body>
+<main id="v"></main><div id="rb"></div>
+<nav><button data-a="tab" data-v="t">Treino</button><button data-a="tab" data-v="b">Exercícios</button><button data-a="tab" data-v="h">Histórico</button></nav>
+<script>
+const $=s=>document.querySelector(s);
+const EQ={B:'Barra',H:'Halteres',M:'Máquina',C:'Cabo',P:'Peso corporal',K:'Kettlebell'};
+const D={
+Peito:'Supino reto com barra~B|Supino inclinado com barra~B|Supino reto com halteres~H|Supino inclinado com halteres~H|Crucifixo com halteres~H|Crucifixo inclinado~H|Crucifixo na máquina (peck deck)~M|Crossover na polia~C|Supino na máquina~M|Flexão de braço~P|Mergulho nas paralelas~P|Pullover com halter~H|Pressão de Peito na Máquina~M',
+Costas:'Barra fixa~P|Puxada frontal na polia~C|Puxada com triângulo~C|Remada curvada com barra~B|Remada unilateral com halter~H|Remada Sentada na Máquina~M|Remada baixa no cabo~C|Remada cavalinho~B|Levantamento terra~B|Pulldown com braço estendido~C|Hiperextensão lombar~P|Remada articulada na máquina~M|Pullover na Polia com Barra (Tronco Inclinado)~C|Superman com halteres a segurar~H|Extensão lombar 45° na máquina~M',
+Pernas:'Agachamento livre~B|Agachamento Goblet com Haltere~H|Agachamento no Smith~M|Agachamento búlgaro~H|Hack squat~M|Leg press 45°~M|Cadeira extensora~M|Mesa flexora~M|Cadeira flexora~M|Afundo com halteres~H|Passada caminhando~H|Stiff com barra~B|Stiff com halteres~H|Cadeira adutora~M|Cadeira abdutora~M|Panturrilha em pé~M|Panturrilha sentado~M|Elevação de Panturrilhas Sentado na Máquina~M|Elevação de Panturrilha em Pé na Máquina~M|Agachamento com Barra (Barra Alta)~B|Curl de Isquiotibiais na Máquina Sentado~M|Extensão de Pernas na Máquina~M',
+Glúteos:'Elevação pélvica com barra~B|Elevação pélvica no chão~P|Ponte de glúteo~P|Coice na polia~C|Abdução de quadril no cabo~C|Coice na máquina~M|Agachamento sumô~H',
+Ombros:'Desenvolvimento com halteres~H|Desenvolvimento com barra~B|Desenvolvimento na máquina~M|Arnold press~H|Elevação lateral~H|Elevação lateral na polia~C|Elevação frontal~H|Crucifixo inverso~H|Crucifixo inverso na máquina~M|Remada alta~B|Encolhimento de Ombros com Halteres~H|Face pull~C|Máquina de Voo Reverso~M|Elevação Lateral Unilateral no Cabo Baixo~C|Encolhimento de ombros no cabo a 30°~C|Encolhimento de Ombros Inclinado com Kettlebell~K',
+Bíceps:'Rosca direta com barra~B|Rosca direta com barra W~B|Rosca alternada~H|Rosca martelo~H|Rosca concentrada~H|Rosca inclinada~H|Rosca Scott~M|Rosca na polia~C|Rosca Martelo na Polia com Corda~C|Rosca de Bíceps no Banco Scott com Halteres~H',
+Tríceps:'Tríceps testa~B|Tríceps pulley com corda~C|Tríceps pulley com barra~C|Tríceps francês~H|Tríceps coice~H|Mergulho no banco~P|Tríceps na máquina~M|Supino fechado~B|Extensão acima da cabeça no cabo~C|Extensão de tríceps com haltere acima da cabeça~H|Tríceps na Polia com Corda~C',
+Abdômen:'Abdominal crunch~P|Abdominal infra~P|Elevação de pernas na barra~P|Prancha~P|Prancha lateral~P|Abdominal na polia~C|Abdominal na máquina~M|Abdominal bicicleta~P|Russian twist~H|Roda abdominal~P|Escalador~P|Elevação de pernas deitado~P|Prancha Alta~P|Prancha lateral com apoio na mão~P|Prancha lateral no antebraço~P',
+Antebraço:'Rosca de punho com halteres~H|Rosca inversa~B|Caminhada do Fazendeiro com kettlebell~K'};
+const L=[];Object.entries(D).forEach(([g,s])=>s.split('|').forEach(x=>{const[n,e]=x.split('~');L.push({n,g,e:EQ[e]})}));
+const T=n=>/^prancha|superman/i.test(n);
+const mk=(n,a)=>({name:n,ex:a.map(([x,k,r])=>({n:x,s:Array.from({length:k},()=>({w:0,r,d:0}))}))});
+const dflt=()=>[
+mk('Day 1',[['Máquina de Voo Reverso',4,12],['Rosca Martelo na Polia com Corda',2,8],['Extensão de tríceps com haltere acima da cabeça',2,8],['Elevação de Panturrilhas Sentado na Máquina',4,12],['Encolhimento de Ombros com Halteres',3,8],['Caminhada do Fazendeiro com kettlebell',3,6]]),
+mk('Day 2',[['Desenvolvimento com Halteres Sentado',2,4],['Agachamento com Barra (Barra Alta)',3,3],['Curl de Isquiotibiais na Máquina Sentado',3,8],['Pullover na Polia com Barra (Tronco Inclinado)',4,6],['Superman com halteres a segurar',3,12],['Elevação de pernas deitado',3,12]]),
+mk('Day 3',[['Remada Sentada na Máquina',3,6],['Agachamento Goblet com Haltere',3,3],['Tríceps na Polia com Corda',2,8],['Elevação de Panturrilha em Pé na Máquina',4,12],['Prancha lateral com apoio na mão',3,20],['Encolhimento de ombros no cabo a 30°',3,8]]),
+mk('Day 4',[['Flexão de braço',3,3],['Encolhimento de Ombros Inclinado com Kettlebell',3,8],['Prancha Alta',3,20],['Extensão de Pernas na Máquina',3,8],['Prancha lateral no antebraço',3,20],['Rosca de punho com halteres',3,12]]),
+mk('Day 5',[['Pressão de Peito na Máquina',3,3],['Elevação Lateral Unilateral no Cabo Baixo',2,8],['Rosca de Bíceps no Banco Scott com Halteres',2,8],['Agachamento com Barra (Barra Alta)',3,3],['Máquina de Voo Reverso',4,12],['Extensão lombar 45° na máquina',3,12]])];
+let S=null;try{S=JSON.parse(localStorage.getItem('treino2'))}catch(e){}
+if(!S||!S.days){let o=null;try{o=JSON.parse(localStorage.getItem('treino1'))}catch(e){}S={days:dflt(),hist:(o&&o.hist)||[],rest:(o&&o.rest)||90,cur:0,w:0}}
+const fs=(n,x)=>T(n)?x.r+'s':x.w+'×'+x.r;
+let tab='t',R=0,dd=0,lib={q:'',g:'Todos'},ac;
+const save=()=>{try{localStorage.setItem('treino2',JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const f=s=>{s=Math.max(0,s|0);const h=s/3600|0,m=(s%3600)/60|0;return(h?h+':':'')+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function audio(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}}
+function beep(){try{navigator.vibrate&&navigator.vibrate([300,100,300,100,300]);if(!ac)return;[0,.25,.5].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.25;o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.15)})}catch(e){}}
+function prev(n,j){for(let k=S.hist.length-1;k>=0;k--){const e=S.hist[k].ex.find(x=>x.n==n);if(e&&e.s[j])return fs(n,e.s[j])}return'-'}
+function vT(){const d=S.days[S.cur],on=!!S.w;
+let h=`<div class="bar"><div><b>${on?'Treinando':'Pronto para treinar?'}</b><span id="tm" class="big">${on?f((Date.now()-S.w)/1000):'00:00'}</span></div><button class="b g" data-a="${on?'fin':'ini'}">${on?'Finalizar':'Iniciar treino'}</button></div>`;
+h+='<div class="chips">'+S.days.map((x,i)=>`<button class="c${i==S.cur?' on':''}" data-a="day" data-i="${i}">${esc(x.name)}</button>`).join('')+'<button class="c" data-a="nd">+ Dia</button></div>';
+h+=`<div class="row"><input class="nm" data-a="rn" value="${esc(d.name)}" aria-label="Nome do dia"><button class="b s" data-a="dd">${dd?'Toque para excluir':'Excluir dia'}</button></div>`;
+h+='<div class="chips" style="align-items:center"><span class="m" style="margin:0">Descanso</span>'+[60,90,120,180].map(x=>`<button class="c${S.rest==x?' on':''}" data-a="rs" data-i="${x}">${x}s</button>`).join('')+'</div>';
+if(!d.ex.length)h+='<p class="m">Este dia ainda não tem exercícios. Abra a aba Exercícios e toque em + para adicionar.</p>';
+h+=d.ex.map((e,i)=>`<section class="card${e.s.length&&e.s.every(x=>x.d)?' ok':''}"><div class="eh"><b>${esc(e.n)}</b><button class="x" data-a="rx" data-i="${i}" aria-label="Remover exercício">✕</button></div><div class="g4 hd"><span>Série</span><span>Anterior</span><span>Peso (kg)</span><span>${T(e.n)?'Segundos':'Reps'}</span><span>Feito</span></div>`+e.s.map((s,j)=>`<div class="g4${s.d?' dn':''}"><span class="sn">${j+1}</span><span class="pv">${prev(e.n,j)}</span><input type="number" inputmode="decimal" data-a="w" data-i="${i}" data-j="${j}" value="${s.w}" aria-label="Peso"><input type="number" inputmode="numeric" data-a="r" data-i="${i}" data-j="${j}" value="${s.r}" aria-label="Repetições"><button class="ck" data-a="ck" data-i="${i}" data-j="${j}" aria-label="Concluir série">✓</button></div>`).join('')+`<button class="b s w" data-a="as" data-i="${i}">+ Adicionar série</button></section>`).join('');
+return h+'<button class="b s w" data-a="tab" data-v="b">+ Adicionar exercício</button>'}
+function ll(){const q=norm(lib.q);const r=L.map((x,i)=>({...x,i})).filter(x=>(lib.g=='Todos'||x.g==lib.g)&&norm(x.n).includes(q));
+return r.length?r.map(x=>`<div class="li"><div><b>${esc(x.n)}</b><span>${x.g}, ${x.e}</span></div><button class="ad" data-a="ad" data-v="${x.i}" aria-label="Adicionar ao treino">+</button></div>`).join(''):'<p class="m">Nenhum exercício encontrado. Tente outro nome ou grupo muscular.</p>'}
+function vB(){return`<h1>Exercícios</h1><input class="q" data-a="q" type="search" placeholder="Buscar exercício" value="${esc(lib.q)}"><div class="chips">${['Todos',...Object.keys(D)].map(g=>`<button class="c${g==lib.g?' on':''}" data-a="lg" data-v="${g}">${g}</button>`).join('')}</div><p class="m">${L.length} exercícios. Toque em + para adicionar ao <b>${esc(S.days[S.cur].name)}</b>.</p><div id="ll">${ll()}</div>`}
+function vH(){const h=S.hist.map((x,k)=>[x,k]).reverse();
+return'<h1>Histórico</h1>'+(h.length?h.map(([x,k])=>`<section class="card"><div class="eh"><b>${esc(x.dn)}</b><button class="x" data-a="hx" data-i="${k}" aria-label="Excluir treino">✕</button></div><p class="m">${new Date(x.t).toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})}, ${f(x.dur)}, ${x.v.toLocaleString('pt-BR')} kg levantados</p>${x.ex.map(e=>`<div class="hl"><span>${esc(e.n)}</span><span>${e.s.map(s=>fs(e.n,s)).join('  ')}</span></div>`).join('')}</section>`).join(''):'<p class="m">Nenhum treino salvo ainda. Inicie um treino e toque em Finalizar para registrar aqui.</p>')+bkp()}
+function bkp(){return'<section class="card"><div class="eh"><b>Backup</b></div><p class="m">Gere o código, copie e guarde nas suas notas. Para restaurar em qualquer celular ou endereço, cole o código aqui e toque em Restaurar.</p><textarea id="bk" class="nm" style="width:100%;height:90px;padding:10px;font:12px monospace" aria-label="Código de backup"></textarea><div class="row" style="margin-top:8px"><button class="b g" data-a="bg">Gerar backup</button><button class="b s" data-a="br">Restaurar</button></div><p class="m" id="bm"></p></section>'}
+function drawRb(){$('#rb').innerHTML=R?`<div class="rest"><span class="big" id="rt">${f((R-Date.now())/1000)}</span><button data-a="ra" data-i="-15">−15</button><button data-a="ra" data-i="15">+15</button><button data-a="rk">Pular</button></div>`:''}
+function render(){$('#v').innerHTML=tab=='t'?vT():tab=='b'?vB():vH();document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==tab));drawRb()}
+function fin(){const d=S.days[S.cur],ex=[];let v=0;
+d.ex.forEach(e=>{const s=e.s.filter(x=>x.d).map(x=>({w:x.w,r:x.r}));if(s.length){ex.push({n:e.n,s});if(!T(e.n))s.forEach(x=>v+=x.w*x.r)}});
+if(ex.length)S.hist.push({t:Date.now(),dn:d.name,dur:(Date.now()-S.w)/1000|0,ex,v});
+d.ex.forEach(e=>e.s.forEach(x=>x.d=0));S.w=0;R=0;save();tab=ex.length?'h':'t';render()}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=+t.dataset.i,j=+t.dataset.j,v=t.dataset.v,d=S.days[S.cur];
+if(a=='q'||a=='w'||a=='r'||a=='rn')return;
+if(a!='dd')dd=0;
+if(a=='tab'){tab=v;render();scrollTo(0,0)}
+else if(a=='day'){S.cur=i;save();render()}
+else if(a=='nd'){S.days.push({name:'Dia '+(S.days.length+1),ex:[]});S.cur=S.days.length-1;save();render()}
+else if(a=='dd'){if(S.days.length<2)return;if(!dd){dd=1;render();return}S.days.splice(S.cur,1);S.cur=0;dd=0;save();render()}
+else if(a=='rs'){S.rest=i;save();render()}
+else if(a=='ini'){audio();S.w=Date.now();save();render()}
+else if(a=='fin')fin();
+else if(a=='rx'){d.ex.splice(i,1);save();render()}
+else if(a=='as'){const l=d.ex[i].s,p=l[l.length-1]||{w:0,r:10};l.push({w:p.w,r:p.r,d:0});save();render()}
+else if(a=='ck'){const s=d.ex[i].s[j];s.d=s.d?0:1;if(s.d){audio();if(!S.w)S.w=Date.now();R=Date.now()+S.rest*1000}save();render()}
+else if(a=='ra'){R+=i*1000;drawRb()}
+else if(a=='rk'){R=0;drawRb()}
+else if(a=='lg'){lib.g=v;render()}
+else if(a=='ad'){d.ex.push({n:L[v].n,s:[0,1,2].map(()=>({w:0,r:T(L[v].n)?20:10,d:0}))});save();t.textContent='✓'}
+else if(a=='hx'){S.hist.splice(i,1);save();render()}
+else if(a=='bg'){const b=$('#bk');b.value=JSON.stringify({v:2,days:S.days,hist:S.hist,rest:S.rest});b.focus();b.select();$('#bm').textContent='Código gerado. Se não foi copiado sozinho, selecione tudo e copie.';try{navigator.clipboard.writeText(b.value).then(()=>{$('#bm').textContent='Código gerado e copiado. Cole em um lugar seguro.'},()=>{})}catch(x){}}
+else if(a=='br'){try{const o=JSON.parse($('#bk').value);if(!Array.isArray(o.days)||!Array.isArray(o.hist))throw 0;S.days=o.days;S.hist=o.hist;S.rest=o.rest||90;S.cur=0;S.w=0;R=0;save();tab='h';render();$('#bm').textContent='Backup restaurado.'}catch(x){$('#bm').textContent='Código inválido. Cole o código completo gerado em Gerar backup.'}}
+});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.a=='q'){lib.q=t.value;$('#ll').innerHTML=ll()}});
+document.addEventListener('change',e=>{const t=e.target,a=t.dataset.a,i=+t.dataset.i,j=+t.dataset.j,d=S.days[S.cur];
+if(a=='w'||a=='r'){d.ex[i].s[j][a]=Math.max(0,parseFloat(t.value)||0);save()}
+else if(a=='rn'){d.name=t.value.trim()||d.name;save();render()}});
+setInterval(()=>{const tm=$('#tm');if(tm&&S.w)tm.textContent=f((Date.now()-S.w)/1000);
+if(R){const l=Math.ceil((R-Date.now())/1000);if(l<=0){R=0;beep();drawRb()}else{const r=$('#rt');if(r)r.textContent=f(l)}}},250);
+render();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script></body></html>
