@@ -49,9 +49,16 @@ nav button{flex:1;border:0;background:none;padding:14px 4px;color:var(--m);font-
 #rb{position:fixed;left:10px;right:10px;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:6}
 .rest{max-width:500px;margin:0 auto;background:var(--a);color:#fff;border-radius:16px;padding:10px 14px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
 .rest .big{flex:1;font-size:34px}.rest button{border:1px solid rgba(255,255,255,.5);background:none;border-radius:10px;padding:8px 10px;color:#fff;font-weight:600}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cal>b{font-size:11px;color:var(--m);font-weight:500}
+.cd{aspect-ratio:1;border:1px solid var(--ln);border-radius:10px;background:var(--s);font-size:14px;padding:0}.cd.t{background:var(--a);color:#fff;border-color:var(--a);font-weight:700}.cd.n{border-color:var(--t)}.cd.s{outline:2px solid var(--t)}.cd.e{visibility:hidden}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20;overflow:auto;padding:calc(16px + env(safe-area-inset-top,0px)) 14px 30px}.ov>div{max-width:520px;margin:0 auto;background:var(--bg);border-radius:18px;padding:16px}
+.st{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.st div{background:var(--s2);border-radius:12px;padding:10px;text-align:center}.st b{display:block;font-size:24px;font-family:"Barlow Condensed",sans-serif}.st span{font-size:12px;color:var(--m)}
+.pb{height:8px;border-radius:4px;background:var(--s2);overflow:hidden}.pb i{display:block;height:100%;background:var(--a)}
+.fi{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px solid var(--ln);font-size:13px}.fi>span:last-child{text-align:right;color:var(--m)}
+.sm{width:100%;height:42px;border-radius:10px;border:1px solid var(--ln);background:var(--s);padding:0 10px}
 </style></head><body>
-<main id="v"></main><div id="rb"></div>
-<nav><button data-a="tab" data-v="t">Treino</button><button data-a="tab" data-v="b">Exercícios</button><button data-a="tab" data-v="h">Histórico</button></nav>
+<main id="v"></main><div id="rb"></div><div id="ov"></div>
+<nav><button data-a="tab" data-v="t">Treino</button><button data-a="tab" data-v="b">Exercícios</button><button data-a="tab" data-v="h">Calendário</button><button data-a="tab" data-v="n">Nutrição</button></nav>
 <script>
 const $=s=>document.querySelector(s);
 const EQ={B:'Barra',H:'Halteres',M:'Máquina',C:'Cabo',P:'Peso corporal',K:'Kettlebell'};
@@ -74,8 +81,19 @@ mk('Day 2',[['Desenvolvimento com Halteres Sentado',2,4],['Agachamento com Barra
 mk('Day 3',[['Remada Sentada na Máquina',3,6],['Agachamento Goblet com Haltere',3,3],['Tríceps na Polia com Corda',2,8],['Elevação de Panturrilha em Pé na Máquina',4,12],['Prancha lateral com apoio na mão',3,20],['Encolhimento de ombros no cabo a 30°',3,8]]),
 mk('Day 4',[['Flexão de braço',3,3],['Encolhimento de Ombros Inclinado com Kettlebell',3,8],['Prancha Alta',3,20],['Extensão de Pernas na Máquina',3,8],['Prancha lateral no antebraço',3,20],['Rosca de punho com halteres',3,12]]),
 mk('Day 5',[['Pressão de Peito na Máquina',3,3],['Elevação Lateral Unilateral no Cabo Baixo',2,8],['Rosca de Bíceps no Banco Scott com Halteres',2,8],['Agachamento com Barra (Barra Alta)',3,3],['Máquina de Voo Reverso',4,12],['Extensão lombar 45° na máquina',3,12]])];
+const P={
+3:()=>[mk('A',[['Agachamento Goblet com Haltere',3,10],['Supino reto com halteres',3,10],['Remada Sentada na Máquina',3,10],['Elevação lateral',3,12],['Prancha Alta',3,30]]),
+mk('B',[['Stiff com halteres',3,10],['Desenvolvimento com halteres',3,10],['Puxada frontal na polia',3,10],['Afundo com halteres',3,10],['Abdominal crunch',3,15]]),
+mk('C',[['Leg press 45°',3,12],['Supino inclinado com halteres',3,10],['Remada unilateral com halter',3,10],['Rosca martelo',2,12],['Tríceps pulley com corda',2,12],['Prancha lateral no antebraço',2,20]])],
+4:()=>[mk('A',[['Agachamento Goblet com Haltere',3,10],['Leg press 45°',3,12],['Cadeira extensora',2,12],['Elevação de Panturrilha em Pé na Máquina',3,12],['Prancha Alta',3,30]]),
+mk('B',[['Supino reto com halteres',3,10],['Desenvolvimento com halteres',3,10],['Supino inclinado com halteres',2,12],['Elevação lateral',3,12],['Tríceps pulley com corda',3,12]]),
+mk('C',[['Stiff com halteres',3,10],['Elevação pélvica no chão',3,12],['Mesa flexora',3,12],['Afundo com halteres',2,10],['Abdominal crunch',3,15]]),
+mk('D',[['Puxada frontal na polia',3,10],['Remada Sentada na Máquina',3,10],['Crucifixo inverso',3,12],['Rosca martelo',3,12],['Rosca direta com barra',2,10]])],
+5:()=>dflt().map((d,i)=>(d.name='ABCDE'[i],d))};
 let S=null;try{S=JSON.parse(localStorage.getItem('treino2'))}catch(e){}
 if(!S||!S.days){let o=null;try{o=JSON.parse(localStorage.getItem('treino1'))}catch(e){}S={days:dflt(),hist:(o&&o.hist)||[],rest:(o&&o.rest)||90,cur:0,w:0}}
+S.pt=S.pt||5;S.progs=S.progs||{};if(S.pt==5)S.days.forEach(d=>{if(/^Day [1-5]$/.test(d.name))d.name='ABCDE'[+d.name.slice(4)-1]});
+S.nut=S.nut||{goal:{k:2000,p:120,c:250,f:70},log:{}};S.bw=S.bw||70;
 const fs=(n,x)=>T(n)?x.r+'s':x.w+'×'+x.r;
 let tab='t',R=0,dd=0,lib={q:'',g:'Todos'},ac;
 const save=()=>{try{localStorage.setItem('treino2',JSON.stringify(S))}catch(e){}};
@@ -87,6 +105,7 @@ function beep(){try{navigator.vibrate&&navigator.vibrate([300,100,300,100,300]);
 function prev(n,j){for(let k=S.hist.length-1;k>=0;k--){const e=S.hist[k].ex.find(x=>x.n==n);if(e&&e.s[j])return fs(n,e.s[j])}return'-'}
 function vT(){const d=S.days[S.cur],on=!!S.w;
 let h=`<div class="bar"><div><b>${on?'Treinando':'Pronto para treinar?'}</b><span id="tm" class="big">${on?f((Date.now()-S.w)/1000):'00:00'}</span></div><button class="b g" data-a="${on?'fin':'ini'}">${on?'Finalizar':'Iniciar treino'}</button></div>`;
+h+=`<p class="m" style="margin:0 0 6px">Tipo de treino${S.w?' (finalize o treino para trocar)':''}</p><div class="chips">`+[[3,'3 dias (A–C)'],[4,'4 dias (A–D)'],[5,'5 dias (A–E)']].map(([n,l])=>`<button class="c${S.pt==n?' on':''}" data-a="pt" data-i="${n}"${S.w?' disabled':''}>${l}</button>`).join('')+'</div>';
 h+='<div class="chips">'+S.days.map((x,i)=>`<button class="c${i==S.cur?' on':''}" data-a="day" data-i="${i}">${esc(x.name)}</button>`).join('')+'<button class="c" data-a="nd">+ Dia</button></div>';
 h+=`<div class="row"><input class="nm" data-a="rn" value="${esc(d.name)}" aria-label="Nome do dia"><button class="b s" data-a="dd">${dd?'Toque para excluir':'Excluir dia'}</button></div>`;
 h+='<div class="chips" style="align-items:center"><span class="m" style="margin:0">Descanso</span>'+[60,90,120,180].map(x=>`<button class="c${S.rest==x?' on':''}" data-a="rs" data-i="${x}">${x}s</button>`).join('')+'</div>';
@@ -96,19 +115,41 @@ return h+'<button class="b s w" data-a="tab" data-v="b">+ Adicionar exercício</
 function ll(){const q=norm(lib.q);const r=L.map((x,i)=>({...x,i})).filter(x=>(lib.g=='Todos'||x.g==lib.g)&&norm(x.n).includes(q));
 return r.length?r.map(x=>`<div class="li"><div><b>${esc(x.n)}</b><span>${x.g}, ${x.e}</span></div><button class="ad" data-a="ad" data-v="${x.i}" aria-label="Adicionar ao treino">+</button></div>`).join(''):'<p class="m">Nenhum exercício encontrado. Tente outro nome ou grupo muscular.</p>'}
 function vB(){return`<h1>Exercícios</h1><input class="q" data-a="q" type="search" placeholder="Buscar exercício" value="${esc(lib.q)}"><div class="chips">${['Todos',...Object.keys(D)].map(g=>`<button class="c${g==lib.g?' on':''}" data-a="lg" data-v="${g}">${g}</button>`).join('')}</div><p class="m">${L.length} exercícios. Toque em + para adicionar ao <b>${esc(S.days[S.cur].name)}</b>.</p><div id="ll">${ll()}</div>`}
-function vH(){const h=S.hist.map((x,k)=>[x,k]).reverse();
-return'<h1>Histórico</h1>'+(h.length?h.map(([x,k])=>`<section class="card"><div class="eh"><b>${esc(x.dn)}</b><button class="x" data-a="hx" data-i="${k}" aria-label="Excluir treino">✕</button></div><p class="m">${new Date(x.t).toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})}, ${f(x.dur)}, ${x.v.toLocaleString('pt-BR')} kg levantados</p>${x.ex.map(e=>`<div class="hl"><span>${esc(e.n)}</span><span>${e.s.map(s=>fs(e.n,s)).join('  ')}</span></div>`).join('')}</section>`).join(''):'<p class="m">Nenhum treino salvo ainda. Inicie um treino e toque em Finalizar para registrar aqui.</p>')+bkp()}
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const MN=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],MEALS=['Café da manhã','Almoço','Lanche','Jantar'],OFF='https://world.openfoodfacts.org';
+let cal={d:new Date(),s:iso(new Date())},nd=iso(new Date()),rep=null,F=null,cam=null;
+const r1=x=>Math.round(x*10)/10,dayL=k=>S.nut.log[k]||(S.nut.log[k]=[[],[],[],[]]),sum=a=>a.reduce((t,i)=>({k:t.k+i.k,p:t.p+i.p,c:t.c+i.c,f:t.f+i.f}),{k:0,p:0,c:0,f:0});
+const repH=x=>`<h1 style="font-size:26px;margin:0">${esc(x.dn)}</h1><p class="m">${new Date(x.t).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'})}</p><div class="st"><div><b>${f(x.dur)}</b><span>Tempo gasto</span></div><div><b>${x.k??Math.round(x.dur*S.bw/720)}</b><span>Kcal (estimado)</span></div><div><b>${x.v.toLocaleString('pt-BR')}</b><span>kg levantados</span></div></div>`+x.ex.map(e=>`<div class="fi"><span>${esc(e.n)}</span><span>${e.s.map(s=>fs(e.n,s)).join('  ')}</span></div>`).join('');
+function vH(){const y=cal.d.getFullYear(),m=cal.d.getMonth(),fd=new Date(y,m,1).getDay(),nm=new Date(y,m+1,0).getDate(),tr={},hj=iso(new Date());S.hist.forEach(x=>tr[iso(new Date(x.t))]=1);
+let g='';for(let i=0;i<fd;i++)g+='<span class="cd e"></span>';
+for(let d=1;d<=nm;d++){const k=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');g+=`<button class="cd${tr[k]?' t':''}${k==cal.s?' s':''}${k==hj?' n':''}" data-a="cd" data-v="${k}">${d}</button>`}
+const ds=S.hist.map((x,k)=>[x,k]).filter(([x])=>iso(new Date(x.t))==cal.s);
+return`<h1>Calendário</h1><div class="bar" style="margin-bottom:8px"><button class="b s" data-a="cm" data-i="-1" aria-label="Mês anterior">‹</button><b style="font-size:16px;color:var(--t)">${MN[m]} ${y}</b><button class="b s" data-a="cm" data-i="1" aria-label="Próximo mês">›</button></div><div class="cal">${'DSTQQSS'.split('').map(x=>`<b>${x}</b>`).join('')}${g}</div><p class="m">Dias em verde são dias em que você treinou. Toque em um dia para ver o relatório.</p>`+(ds.length?ds.map(([x,k])=>`<section class="card">${repH(x)}<button class="b s w" data-a="hx" data-i="${k}">Excluir este treino</button></section>`).join(''):`<p class="m">Nenhum treino em ${cal.s.split('-').reverse().join('/')}.</p>`)+bkp()}
+function vN(){const L2=dayL(nd),all=sum(L2.flat()),G=S.nut.goal,d0=new Date(nd+'T12:00:00'),wd=(d0.getDay()+6)%7;let wk=0,wn=0;
+for(let i=0;i<7;i++){const dd=new Date(d0);dd.setDate(d0.getDate()-wd+i);const l=S.nut.log[iso(dd)];if(l){const t=sum(l.flat());if(t.k){wk+=t.k;wn++}}}
+const bar=(l,v,g,u)=>`<div style="margin:8px 0"><div class="fi" style="border:0;padding:0"><span style="color:var(--t)">${l}</span><span>${Math.round(v)} / ${g} ${u}</span></div><div class="pb"><i style="width:${Math.min(100,v/g*100||0)}%"></i></div></div>`,gi=(l,k,v)=>`<label class="m" style="display:block">${l}<input class="sm" type="number" inputmode="decimal" data-a="gl" data-v="${k}" value="${v}"></label>`;
+return`<h1>Nutrição</h1><div class="bar" style="margin-bottom:8px"><button class="b s" data-a="nv" data-i="-1" aria-label="Dia anterior">‹</button><b style="font-size:16px;color:var(--t)">${nd.split('-').reverse().join('/')}${nd==iso(new Date())?' (hoje)':''}</b><button class="b s" data-a="nv" data-i="1" aria-label="Próximo dia">›</button></div><section class="card">${bar('Calorias',all.k,G.k,'kcal')}${bar('Proteínas',all.p,G.p,'g')}${bar('Carboidratos',all.c,G.c,'g')}${bar('Gorduras',all.f,G.f,'g')}<p class="m">Semana (seg a dom): ${Math.round(wk)} kcal no total, média de ${wn?Math.round(wk/wn):0} kcal por dia registrado.</p></section>`+MEALS.map((n,mi)=>`<section class="card"><div class="eh"><b>${n}</b><span class="m" style="margin:0">${Math.round(sum(L2[mi]).k)} kcal</span></div>${L2[mi].map((it,ii)=>`<div class="fi"><span style="color:var(--t)">${esc(it.n)}<br><small style="color:var(--m)">${it.g?it.g+' g, ':''}P ${Math.round(it.p)} C ${Math.round(it.c)} G ${Math.round(it.f)}</small></span><span>${Math.round(it.k)} kcal <button class="x" data-a="ni" data-i="${mi}" data-j="${ii}" aria-label="Remover alimento">✕</button></span></div>`).join('')}<button class="b s w" data-a="fa" data-i="${mi}">+ Adicionar alimento</button></section>`).join('')+`<button class="b s w" data-a="nc">Copiar refeições do dia anterior</button><section class="card"><div class="eh"><b>Metas diárias e peso</b></div>${gi('Calorias (kcal)','k',G.k)}${gi('Proteínas (g)','p',G.p)}${gi('Carboidratos (g)','c',G.c)}${gi('Gorduras (g)','f',G.f)}${gi('Seu peso (kg), usado para estimar as kcal do treino','w',S.bw)}</section>`}
+const mp=p=>{const n=p.nutriments||{};return{n:(p.product_name||'Sem nome')+(p.brands?' ('+p.brands.split(',')[0].trim()+')':''),k:+(n['energy-kcal_100g']??(n.energy_100g/4.184))||0,p:+n.proteins_100g||0,c:+n.carbohydrates_100g||0,f:+n.fat_100g||0}};
+async function srch(){if(!F.q.trim())return;F.msg='Buscando...';drawOv();try{const r=await fetch(OFF+'/cgi/search.pl?search_simple=1&action=process&json=1&page_size=15&fields=product_name,brands,nutriments&search_terms='+encodeURIComponent(F.q));const j=await r.json();F.res=(j.products||[]).filter(p=>p.product_name).map(mp).filter(p=>p.k>0);F.msg=F.res.length?'Toque em + para escolher.':'Nada encontrado. Tente outro nome ou adicione manualmente.'}catch(e){F.msg='Sem conexão com o banco de alimentos. Verifique a internet.'}drawOv()}
+async function code(c){F.msg='Buscando o código...';drawOv();try{const r=await fetch(OFF+'/api/v2/product/'+encodeURIComponent(c)+'.json?fields=product_name,brands,nutriments');const j=await r.json();if(j.status==1&&j.product)F.sel=mp(j.product);else F.msg='Produto não encontrado para o código '+c+'. Tente a busca por nome ou adicione manualmente.'}catch(e){F.msg='Sem conexão com o banco de alimentos.'}drawOv()}
+function stopC(){if(F)clearInterval(F.tm);cam&&cam.getTracks().forEach(t=>t.stop());cam=null;if(F)F.cam=0}
+async function camS(){if(F.cam){stopC();drawOv();return}
+if(!('BarcodeDetector' in window)||!navigator.mediaDevices){F.msg='Este navegador não lê códigos pela câmera. Digite o número do código no campo abaixo.';drawOv();return}
+try{cam=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});F.cam=1;drawOv();const v=$('#cv');v.srcObject=cam;await v.play();const det=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});F.tm=setInterval(async()=>{try{const r=await det.detect(v);if(r.length){const c=r[0].rawValue;stopC();code(c)}}catch(e){}},400)}catch(e){stopC();F.msg='Não consegui abrir a câmera. Permita o acesso ou digite o código.';drawOv()}}
+function vF(){const p=F.sel;return`<div class="ov"><div><div class="eh"><b>${MEALS[F.m]}</b><button class="x" data-a="fx" aria-label="Fechar">✕</button></div>`+(p?`<p><b>${esc(p.n)}</b></p><p class="m">Por 100 g: ${Math.round(p.k)} kcal, P ${r1(p.p)} g, C ${r1(p.c)} g, G ${r1(p.f)} g</p><label class="m" style="display:block">Quantidade (g)<input class="sm" id="fg" type="number" inputmode="decimal" value="100"></label><div class="row" style="margin-top:10px"><button class="b s" data-a="fback">Voltar</button><button class="b g" style="flex:1" data-a="fadd">Adicionar</button></div>`:`<div class="row"><input class="sm" id="fq" data-a="fq" type="search" placeholder="Buscar alimento ou marca" value="${esc(F.q)}"><button class="b g" data-a="fs">Buscar</button></div><div class="row"><button class="b s" style="flex:1" data-a="fc">${F.cam?'Parar câmera':'Ler código de barras'}</button></div>${F.cam?'<video id="cv" playsinline muted style="width:100%;border-radius:12px;margin-bottom:8px"></video>':''}<div class="row"><input class="sm" data-a="fb" inputmode="numeric" placeholder="Ou digite o código de barras" aria-label="Código de barras" value="${esc(F.b)}"><button class="b s" data-a="fl">Buscar</button></div><p class="m">${F.msg}</p>${F.res.map((x,i)=>`<div class="li"><div><b>${esc(x.n)}</b><span>${Math.round(x.k)} kcal por 100 g</span></div><button class="ad" data-a="fp" data-i="${i}" aria-label="Escolher">+</button></div>`).join('')}<details style="margin-top:12px"><summary>Adicionar manualmente</summary>${['Nome|text','Kcal|number','Proteínas (g)|number','Carboidratos (g)|number','Gorduras (g)|number'].map((x,i)=>{const[a,b]=x.split('|');return`<input class="sm" style="margin-top:6px" id="mf${i}" type="${b}" ${b=='number'?'inputmode="decimal" ':''}placeholder="${a}" aria-label="${a}">`}).join('')}<button class="b g w" data-a="fm">Adicionar</button></details>`)+'</div></div>'}
+function drawOv(){$('#ov').innerHTML=rep?`<div class="ov"><div><p class="m" style="margin:0">Treino concluído</p>${repH(rep)}<p class="m">As kcal são uma estimativa pelo tempo e pelo seu peso, não uma medida exata.</p><button class="b g w" data-a="rc">Fechar</button></div></div>`:F?vF():''}
 function bkp(){return'<section class="card"><div class="eh"><b>Backup</b></div><p class="m">Gere o código, copie e guarde nas suas notas. Para restaurar em qualquer celular ou endereço, cole o código aqui e toque em Restaurar.</p><textarea id="bk" class="nm" style="width:100%;height:90px;padding:10px;font:12px monospace" aria-label="Código de backup"></textarea><div class="row" style="margin-top:8px"><button class="b g" data-a="bg">Gerar backup</button><button class="b s" data-a="br">Restaurar</button></div><p class="m" id="bm"></p></section>'}
 function drawRb(){$('#rb').innerHTML=R?`<div class="rest"><span class="big" id="rt">${f((R-Date.now())/1000)}</span><button data-a="ra" data-i="-15">−15</button><button data-a="ra" data-i="15">+15</button><button data-a="rk">Pular</button></div>`:''}
-function render(){$('#v').innerHTML=tab=='t'?vT():tab=='b'?vB():vH();document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==tab));drawRb()}
+function render(){$('#v').innerHTML=tab=='t'?vT():tab=='b'?vB():tab=='n'?vN():vH();document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==tab));drawRb();drawOv()}
 function fin(){const d=S.days[S.cur],ex=[];let v=0;
 d.ex.forEach(e=>{const s=e.s.filter(x=>x.d).map(x=>({w:x.w,r:x.r}));if(s.length){ex.push({n:e.n,s});if(!T(e.n))s.forEach(x=>v+=x.w*x.r)}});
-if(ex.length)S.hist.push({t:Date.now(),dn:d.name,dur:(Date.now()-S.w)/1000|0,ex,v});
-d.ex.forEach(e=>e.s.forEach(x=>x.d=0));S.w=0;R=0;save();tab=ex.length?'h':'t';render()}
+if(ex.length)S.hist.push({t:Date.now(),dn:(/^[A-E]$/.test(d.name)?'Treino ':'')+d.name,dur:(Date.now()-S.w)/1000|0,k:Math.round((Date.now()-S.w)/1000*S.bw/720),ex,v});
+d.ex.forEach(e=>e.s.forEach(x=>x.d=0));S.w=0;R=0;save();if(ex.length){rep=S.hist[S.hist.length-1];cal.d=new Date();cal.s=iso(new Date())}tab=ex.length?'h':'t';render()}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,i=+t.dataset.i,j=+t.dataset.j,v=t.dataset.v,d=S.days[S.cur];
-if(a=='q'||a=='w'||a=='r'||a=='rn')return;
+if(['q','w','r','rn','fq','fb','gl'].includes(a))return;
 if(a!='dd')dd=0;
 if(a=='tab'){tab=v;render();scrollTo(0,0)}
+else if(a=='pt'){if(S.w||i==S.pt)return;S.progs[S.pt]=S.days;S.pt=i;S.days=S.progs[i]||P[i]();delete S.progs[i];S.cur=0;save();render()}
 else if(a=='day'){S.cur=i;save();render()}
 else if(a=='nd'){S.days.push({name:'Dia '+(S.days.length+1),ex:[]});S.cur=S.days.length-1;save();render()}
 else if(a=='dd'){if(S.days.length<2)return;if(!dd){dd=1;render();return}S.days.splice(S.cur,1);S.cur=0;dd=0;save();render()}
@@ -123,12 +164,28 @@ else if(a=='rk'){R=0;drawRb()}
 else if(a=='lg'){lib.g=v;render()}
 else if(a=='ad'){d.ex.push({n:L[v].n,s:[0,1,2].map(()=>({w:0,r:T(L[v].n)?20:10,d:0}))});save();t.textContent='✓'}
 else if(a=='hx'){S.hist.splice(i,1);save();render()}
-else if(a=='bg'){const b=$('#bk');b.value=JSON.stringify({v:2,days:S.days,hist:S.hist,rest:S.rest});b.focus();b.select();$('#bm').textContent='Código gerado. Se não foi copiado sozinho, selecione tudo e copie.';try{navigator.clipboard.writeText(b.value).then(()=>{$('#bm').textContent='Código gerado e copiado. Cole em um lugar seguro.'},()=>{})}catch(x){}}
-else if(a=='br'){try{const o=JSON.parse($('#bk').value);if(!Array.isArray(o.days)||!Array.isArray(o.hist))throw 0;S.days=o.days;S.hist=o.hist;S.rest=o.rest||90;S.cur=0;S.w=0;R=0;save();tab='h';render();$('#bm').textContent='Backup restaurado.'}catch(x){$('#bm').textContent='Código inválido. Cole o código completo gerado em Gerar backup.'}}
+else if(a=='cd'){cal.s=v;render()}
+else if(a=='cm'){cal.d=new Date(cal.d.getFullYear(),cal.d.getMonth()+i,1);render()}
+else if(a=='rc'){rep=null;render()}
+else if(a=='nv'){const x=new Date(nd+'T12:00:00');x.setDate(x.getDate()+i);nd=iso(x);render()}
+else if(a=='ni'){dayL(nd)[i].splice(j,1);save();render()}
+else if(a=='nc'){const x=new Date(nd+'T12:00:00');x.setDate(x.getDate()-1);const p=S.nut.log[iso(x)];if(p){S.nut.log[nd]=JSON.parse(JSON.stringify(p));save();render()}}
+else if(a=='fa'){F={m:i,q:'',b:'',res:[],sel:null,msg:'',cam:0};drawOv()}
+else if(a=='fx'){stopC();F=null;drawOv()}
+else if(a=='fs')srch();
+else if(a=='fl'){if(F.b.trim())code(F.b.trim())}
+else if(a=='fc')camS();
+else if(a=='fp'){F.sel=F.res[i];drawOv()}
+else if(a=='fback'){F.sel=null;drawOv()}
+else if(a=='fadd'){const g=parseFloat($('#fg').value)||0,p=F.sel;if(g>0){dayL(nd)[F.m].push({n:p.n,g,k:p.k*g/100,p:p.p*g/100,c:p.c*g/100,f:p.f*g/100});F=null;save();render()}}
+else if(a=='fm'){const w=[0,1,2,3,4].map(k=>$('#mf'+k).value);if(w[0].trim()){dayL(nd)[F.m].push({n:w[0].trim(),g:0,k:+w[1]||0,p:+w[2]||0,c:+w[3]||0,f:+w[4]||0});F=null;save();render()}}
+else if(a=='bg'){const b=$('#bk');b.value=JSON.stringify({v:2,days:S.days,hist:S.hist,rest:S.rest,nut:S.nut,bw:S.bw,pt:S.pt,progs:S.progs});b.focus();b.select();$('#bm').textContent='Código gerado. Se não foi copiado sozinho, selecione tudo e copie.';try{navigator.clipboard.writeText(b.value).then(()=>{$('#bm').textContent='Código gerado e copiado. Cole em um lugar seguro.'},()=>{})}catch(x){}}
+else if(a=='br'){try{const o=JSON.parse($('#bk').value);if(!Array.isArray(o.days)||!Array.isArray(o.hist))throw 0;S.days=o.days;S.hist=o.hist;S.rest=o.rest||90;S.nut=o.nut||S.nut;S.bw=o.bw||S.bw;S.pt=o.pt||5;S.progs=o.progs||{};S.cur=0;S.w=0;R=0;save();tab='h';render();$('#bm').textContent='Backup restaurado.'}catch(x){$('#bm').textContent='Código inválido. Cole o código completo gerado em Gerar backup.'}}
 });
-document.addEventListener('input',e=>{const t=e.target;if(t.dataset.a=='q'){lib.q=t.value;$('#ll').innerHTML=ll()}});
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.a=='q'){lib.q=t.value;$('#ll').innerHTML=ll()}else if(t.dataset.a=='fq')F.q=t.value;else if(t.dataset.a=='fb')F.b=t.value;});
 document.addEventListener('change',e=>{const t=e.target,a=t.dataset.a,i=+t.dataset.i,j=+t.dataset.j,d=S.days[S.cur];
 if(a=='w'||a=='r'){d.ex[i].s[j][a]=Math.max(0,parseFloat(t.value)||0);save()}
+else if(a=='gl'){const k=t.dataset.v;if(k=='w')S.bw=parseFloat(t.value)||70;else S.nut.goal[k]=parseFloat(t.value)||0;save();render()}
 else if(a=='rn'){d.name=t.value.trim()||d.name;save();render()}});
 setInterval(()=>{const tm=$('#tm');if(tm&&S.w)tm.textContent=f((Date.now()-S.w)/1000);
 if(R){const l=Math.ceil((R-Date.now())/1000);if(l<=0){R=0;beep();drawRb()}else{const r=$('#rt');if(r)r.textContent=f(l)}}},250);
